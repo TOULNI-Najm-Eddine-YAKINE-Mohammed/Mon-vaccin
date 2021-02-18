@@ -1,0 +1,83 @@
+<div class="container mt-5">
+    <div *ngIf="!pressAjouter" class="form-group my-3">
+        <button (click)="pressAjouter=true" type="submit" class="btn btn-primary mr-2">Ajouter un centre</button>
+    </div>
+    <div class="w-50 my-4 mx-auto">
+        <form *ngIf="pressAjouter" class="form-horizontal" (submit)="addCentre()" [formGroup]="form">
+            <h2 class="text-center my-3">Ajouter un centre</h2>
+            <div class="form-group">
+                <input type="text" class="form-control mb-3" value="" placeholder="email" formControlName="email">
+                <input type="password" class="form-control mb-3" value="" placeholder="password"
+                    formControlName="password">
+                <input type="text" class="form-control mb-3" value="" placeholder="adresse" formControlName="adresse">
+                <input type="text" class="form-control mb-3" value="" placeholder="ville" formControlName="ville">
+            </div>
+            <div class="form-group my-3 mx-auto" style="width: fit-content;">
+                <button type="submit" class="btn btn-success mr-2" [disabled]="form.invalid">Valider </button>
+                <button type="submit" class="btn btn-danger mr-2" (click)="annuler()">Annuler </button>
+            </div>
+        </form>
+        <div class="alerts">
+            <div *ngIf="success">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" (click)="success=false" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="error">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" (click)="error=false" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="submit">
+            <div class="spinner-border text-primary d-block my-0 mx-auto" role="status"></div>
+        </div>
+    </div>
+
+    <div *ngIf="!pressAjouter">
+        <h1 class="my-5 text-center">Tableau de bord</h1>
+        <p style="font-size: 1.4em;">Le bilan du {{today | date : 'dd/MM/yyyy'}}</p>
+        <div class="card-deck">
+            <div class="card text-white mb-3 shadow" style="background-color: #f11d31;">
+                <div class="card-body">
+                    <h5 class="card-title">Rendez-vous courants :</h5>
+                    <h4 class="card-text">{{nbrRdv}}</h4>
+                </div>
+            </div>
+            <div class="card text-white mb-3 shadow" style="background-color: #2bca4f;">
+                <div class="card-body">
+                    <h5 class="card-title">Vaccinations :</h5>
+                    <h4 class="card-text">{{nbrVaccinations}}</h4>
+                </div>
+            </div>
+            <div class="card text-white mb-3 shadow" style="background-color: #1fb6ce">
+                <div class="card-body">
+                    <h5 class="card-title">Nombre de centres :</h5>
+                    <h4 class="card-text">{{nbrCentres}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="card my-5">
+            <div class="card-header bg-light">Statistiques des rendez-vous/vaccinations par ville</div>
+            <div class="card-body">
+                <canvas id="myChart1"></canvas>
+            </div>
+        </div>
+
+        <div class="card my-5">
+            <div class="card-header bg-light">Statistiques des rendez-vous pris pour la semaine prochaine</div>
+            <div class="card-body">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+</div>

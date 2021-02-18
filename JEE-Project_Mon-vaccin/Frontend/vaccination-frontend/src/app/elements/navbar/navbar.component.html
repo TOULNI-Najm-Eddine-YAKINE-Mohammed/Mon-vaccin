@@ -1,0 +1,21 @@
+<div class="mayNav">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #f15246 !important;">
+    <div class="container">
+      <nav class="navbar">
+        <span class="d-inline-block text-light h5">Mon Vaccin <i class="fas fa-syringe ml-2"></i></span>
+      </nav>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div *ngIf="type" class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto h6">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link active" routerLink="/authentification">Déconnecter</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+</div>

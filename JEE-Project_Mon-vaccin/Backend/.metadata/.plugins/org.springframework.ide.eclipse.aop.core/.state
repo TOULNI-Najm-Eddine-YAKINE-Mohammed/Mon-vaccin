@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="User-Microservice"/>
+<aop-project name="Vaccination-Microservice"/>
+<aop-project name="RDV-Microservice"/>
+</aop-reference-model>

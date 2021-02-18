@@ -1,0 +1,85 @@
+<div class="container mt-5">
+  <div *ngIf="!hasVacc" class="w-50 my-x mx-auto">
+      <h2 class="text-center mb-4">Mon rendez-vous</h2>
+      <div *ngIf="!pressAjouter && !pressUpdate" class="form-group my-3 mx-auto" style="width: fit-content;">
+        <button *ngIf="!hasRdv" (click)="pressAjouter=true" type="submit" class="btn btn-primary mr-2">Prendre </button>
+        <button *ngIf="hasRdv" (click)="pressUpdate=true" type="submit" class="btn btn-warning mr-2">Modifier </button>
+        <button *ngIf="hasRdv" (click)="deleteRdv()" type="submit" class="btn btn-danger mr-2">Annuler </button>
+      </div>
+      <form *ngIf="pressUpdate" class="form-horizontal" (submit)="updateRdv()" [formGroup]="form2">
+        <div class="form-group">
+          <select autocomplete="off" (change)="setDisabledDates(form2)" class="form-control" formControlName="ville">
+            <option value="" disabled selected>Ville</option>
+            <option *ngFor="let ville of villes" value={{ville}}>{{ville}}</option>
+          </select>
+        </div>
+        <input readonly onchange="jourValue()" autocomplete="off" [attr.disabled]="villeChoisie ? null : ''" type="text" (focusout)="setDisponiblesHeures(form2)" class="form-control mb-3" id="datepicker" (click)="callJs(disabledDates);" placeholder="Jour" formControlName="jour">
+        <div class="form-group">
+          <select (change)="combineDate(form2)" autocomplete="off" [attr.disabled]="dateChoisie ? null : ''" class="form-control" formControlName="heure">
+            <option value="" disabled selected>Heure</option>
+            <option *ngFor="let heure of disponiblesHeures" value={{heure}}>{{heure}}</option>
+          </select>
+        </div>
+        <input type="hidden" value="" formControlName="date">
+        <div class="form-group my-3 mx-auto" style="width: fit-content;">
+            <button type="submit" class="btn btn-success mr-2" [disabled]="form2.invalid">Valider </button>
+        </div>
+      </form>
+      <form *ngIf="pressAjouter" class="form-horizontal" (submit)="ajouterRdv()" [formGroup]="form">
+        <input type="text" class="form-control mb-3" value="" placeholder="nom" formControlName="nom">
+        <input type="text" class="form-control mb-3" value="" placeholder="prenom" formControlName="prenom">
+        <input type="text" class="form-control mb-3" value="" placeholder="CIN" formControlName="cin">
+          <div class="form-group">
+            <select class="form-control" formControlName="sexe">
+              <option value="" disabled selected>Sexe</option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femme</option>
+            </select>
+          </div>
+          <input type="text" class="form-control mb-3" value="" placeholder="age" formControlName="age">
+          <input type="text" class="form-control mb-3" value="" placeholder="tel" formControlName="tel">
+          <div class="form-group">
+            <select autocomplete="off" (change)="setDisabledDates(form)" class="form-control" formControlName="ville">
+              <option value="" disabled selected>Ville</option>
+              <option *ngFor="let ville of villes" value={{ville}}>{{ville}}</option>
+            </select>
+          </div>
+          <input readonly onchange="jourValue()" autocomplete="off" type="text" (focusout)="setDisponiblesHeures(form)" [attr.disabled]="villeChoisie ? null : ''" class="form-control mb-3" id="datepicker" (click)="callJs(disabledDates);" placeholder="Jour" formControlName="jour">
+          <div class="form-group">
+            <select (change)="combineDate(form)" autocomplete="off" [attr.disabled]="dateChoisie ? null : ''" class="form-control" formControlName="heure">
+              <option value="" disabled selected>Heure</option>
+              <option *ngFor="let heure of disponiblesHeures" value={{heure}}>{{heure}}</option>
+            </select>
+          </div>
+          <input type="hidden" value="" formControlName="date">
+          <div class="form-group my-3 mx-auto" style="width: fit-content;">
+            <button type="submit" class="btn btn-success mr-2" [disabled]="form.invalid">Valider</button>
+          </div>
+      </form>
+      <div class="alerts">
+        <div *ngIf="success">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" (click)="success=false" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="error">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" (click)="error=false" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="submit">
+        <div class="spinner-border text-primary d-block my-0 mx-auto" role="status"></div>
+      </div>
+  </div>
+  <div *ngIf="hasVacc" class="my-x mx-auto text-center">
+    <h2>Vous avez déjà pris votre vaccin.<br> 
+      Nous vous souhaitons une bonne santé. </h2>
+  </div>
+</div>

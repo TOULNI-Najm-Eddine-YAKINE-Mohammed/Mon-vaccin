@@ -1,0 +1,38 @@
+<div class="container mt-5">
+    <div class="float-left">
+        <button (click)="getRdvsToday(); rdvsToday=true" class="btn btn-warning mr-2">Rendez-vous d'aujourd'hui</button>
+        <button (click)="setRdvs(); rdvsToday=false" class="btn btn-info">Tous les rendez-vous</button>
+    </div>
+    <form class="form-inline mb-3 float-right" (submit)="getRdvByCin()" [formGroup]="form">
+        <input class="form-control mr-sm-2" placeholder="CIN" formControlName="cin">
+        <button [disabled]="form.invalid" class="btn btn-outline-success my-2 my-sm-0" type="submit">chercher</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">CIN</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Age</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rdv of rdvs | paginate: { itemsPerPage: 10, currentPage: p }">
+                <td>{{rdv["citoyen"]["cin"]}}</td>
+                <td>{{rdv["citoyen"]["nom"]}}</td>
+                <td>{{rdv["citoyen"]["prenom"]}}</td>
+                <td>{{rdv["citoyen"]["age"]}}</td>
+                <td>{{rdv["date"]}}</td>
+                <td>
+                    <button (click)="addVaccination(rdv['citoyen']['cin'])" type="submit"
+                        class="btn btn-success w-75">Valider</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+</div>
